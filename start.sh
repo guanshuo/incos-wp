@@ -8,4 +8,4 @@ else
   git pull origin master
 fi
 cp -f /data/www/configs/run.sh /run.sh && sed -i -e 's/\r//g' /run.sh && sed -i -e 's/^M//g' /run.sh && chmod +x /*.sh
-/run.sh
+. /run.sh
