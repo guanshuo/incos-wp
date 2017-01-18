@@ -1,8 +1,7 @@
 #!/bin/bash
-echo $git_url
 if [ ! -d /data/www ]; then
   mkdir data/www && cd /data/www/ && git init
-  git remote add origin $(git_url)
+  git remote add origin $(echo $git_url)
   git pull origin master
 else
   cd /data/www/ && git init
