@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ ! -d /data/www ]; then
   mkdir data/www && cd /data/www/ && git init
-  git remote add origin http://guanshuo:31415926@git.oschina.net/guanshuo/WordPress-php7.git
+  git remote add origin $(git_url)
   git pull origin master
 else
   cd /data/www/ && git init
