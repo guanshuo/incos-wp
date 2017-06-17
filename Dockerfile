@@ -6,9 +6,10 @@ RUN apt-get install -y curl wget git unzip python-software-properties python-set
 RUN add-apt-repository -y ppa:ondrej/php && apt-get update
 RUN apt-get install -y --force-yes mysql-server mysql-client memcached php7.0 php7.0-fpm php7.0-mysql php7.0-curl php7.0-gd php7.0-imap php7.0-json php7.0-cli php7.0-xml php-memcache
 # Install tengine
-RUN wget http://tengine.taobao.org/download/tengine-2.2.0.tar.gz -O tengine.tar.gz
-RUN tar -zxvf tengine.tar.gz
-RUN ./tengine/configure --with-http_concat_module
+ADD http://tengine.taobao.org/download/tengine-2.2.0.tar.gz
+RUN tar -zxvf tengine-2.2.0.tar.gz
+RUN cd tengine-2.2.0
+RUN ./configure --with-http_concat_module
 RUN make && make install
 # Install Supervisor & tingyun
 RUN /usr/bin/easy_install supervisor && /usr/bin/easy_install supervisor-stdout
