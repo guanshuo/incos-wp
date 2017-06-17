@@ -1,12 +1,15 @@
 FROM ubuntu:trusty
 # Update packages
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list 
-RUN echo "deb http://nginx.org/packages/ubuntu/ trusty nginx" >> /etc/apt/sources.list 
-RUN echo "deb-src http://nginx.org/packages/ubuntu/ trusty nginx" >> /etc/apt/sources.list && apt-get update
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list && apt-get update
 # install curl, wget,sql ,server
 RUN apt-get install -y curl wget git unzip python-software-properties python-setuptools openssh-server software-properties-common debian-archive-keyring
 RUN add-apt-repository -y ppa:ondrej/php && apt-get update
-RUN apt-get install -y --force-yes mysql-server mysql-client memcached php7.0 php7.0-fpm php7.0-mysql php7.0-curl php7.0-gd php7.0-imap php7.0-json php7.0-cli php7.0-xml php-memcache nginx
+RUN apt-get install -y --force-yes mysql-server mysql-client memcached php7.0 php7.0-fpm php7.0-mysql php7.0-curl php7.0-gd php7.0-imap php7.0-json php7.0-cli php7.0-xml php-memcache
+# Install tengine
+RUN wget http://tengine.taobao.org/download/tengine-2.2.0.tar.gz -O tengine.tar.gz
+RUN tar zxvf tengine.tar.gz && cd tengine && ./configure --with-http_concat_module
+RUN make && make install
+RUN cd /
 # Install Supervisor & tingyun
 RUN /usr/bin/easy_install supervisor && /usr/bin/easy_install supervisor-stdout
 RUN wget http://download.tingyun.com/agent/php/2.5.0/tingyun-agent-php-2.5.0.x86_64.deb?a=1479890082446 -O tingyun-agent-php.deb
