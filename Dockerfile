@@ -8,10 +8,8 @@ RUN apt-get install -y --force-yes mysql-server mysql-client memcached php7.0 ph
 # Install tengine
 RUN wget http://tengine.taobao.org/download/tengine-2.2.0.tar.gz -O tengine.tar.gz
 RUN tar -zxvf tengine.tar.gz
-RUN /bin/sh -c 'cd /tengine/'
-RUN ./configure --with-http_concat_module
+RUN ./tengine/configure --with-http_concat_module
 RUN make && make install
-RUN cd /
 # Install Supervisor & tingyun
 RUN /usr/bin/easy_install supervisor && /usr/bin/easy_install supervisor-stdout
 RUN wget http://download.tingyun.com/agent/php/2.5.0/tingyun-agent-php-2.5.0.x86_64.deb?a=1479890082446 -O tingyun-agent-php.deb
