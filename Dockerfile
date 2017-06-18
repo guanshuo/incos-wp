@@ -2,7 +2,7 @@ FROM ubuntu:trusty
 # Update packages
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list && apt-get update
 # install curl, wget,sql ,server
-RUN apt-get install -y curl wget git unzip libpcre3 python-software-properties python-setuptools openssh-server software-properties-common debian-archive-keyring gcc
+RUN apt-get install -y curl wget git unzip libpcre3 libpcre3-dev python-software-properties python-setuptools openssh-server software-properties-common debian-archive-keyring gcc
 RUN add-apt-repository -y ppa:ondrej/php && apt-get update
 RUN apt-get install -y --force-yes mysql-server mysql-client memcached php7.0 php7.0-fpm php7.0-mysql php7.0-curl php7.0-gd php7.0-imap php7.0-json php7.0-cli php7.0-xml php-memcache
 # Install tengine
