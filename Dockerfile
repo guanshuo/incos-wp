@@ -2,14 +2,14 @@ FROM ubuntu:trusty
 # Update packages
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list && apt-get update
 # install curl, wget,sql ,server
-RUN apt-get install -y curl wget git unzip libpcre3 libpcre3-dev openssl libssl-dev make python-software-properties python-setuptools openssh-server software-properties-common debian-archive-keyring gcc
+RUN apt-get install -y curl wget git subversion unzip libpcre3 libpcre3-dev openssl libssl-dev make python-software-properties python-setuptools openssh-server software-properties-common debian-archive-keyring gcc
 RUN add-apt-repository -y ppa:ondrej/php && apt-get update
 RUN apt-get install -y --force-yes mysql-server mysql-client memcached php7.0 php7.0-fpm php7.0-mysql php7.0-curl php7.0-gd php7.0-imap php7.0-json php7.0-cli php7.0-xml php-memcache
 # Install tengine
 ADD http://tengine.taobao.org/download/tengine-2.2.0.tar.gz .
 RUN tar zxvf tengine-2.2.0.tar.gz && cd tengine-2.2.0 && ./configure --with-http_concat_module && make && make install
 # Install n2n
-ADD https://svn.ntop.org/svn/ntop/trunk/n2n .
+RUN svn co https://svn.ntop.org/svn/ntop/trunk/n2n .
 RUN cd n2n/n2n_v2/ && make && make install
 # Install Supervisor & tingyun
 RUN /usr/bin/easy_install supervisor && /usr/bin/easy_install supervisor-stdout
