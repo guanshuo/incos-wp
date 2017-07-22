@@ -20,5 +20,5 @@ RUN pip install shadowsocks
 ADD start.sh /start.sh
 RUN sed -i -e 's/\r//g' /start.sh && sed -i -e 's/^M//g' /start.sh && chmod +x /*.sh
 VOLUME ["/data"]
-EXPOSE 22 80 3306 8118 9001 11211
+EXPOSE 22 80 3306 8388 9001 11211
 CMD ["/bin/bash", "/start.sh"]
