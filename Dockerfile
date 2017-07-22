@@ -2,9 +2,9 @@ FROM ubuntu:trusty
 # Update packages
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list && apt-get update
 # install curl, wget,sql ,server
-RUN apt-get install -y libpcre3 libpcre3-dev libssl-dev make gcc g++ build-essential cmake curl wget git unzip python-software-properties python-setuptools software-properties-common debian-archive-keyring python-pip libsodium-dev openssl openssh-server
+RUN apt-get install -y libpcre3 libpcre3-dev libssl-dev make gcc g++ build-essential cmake curl wget git unzip python-software-properties python-setuptools software-properties-common debian-archive-keyring python-pip openssl openssh-server
 RUN add-apt-repository -y ppa:ondrej/php && apt-get update
-RUN apt-get install -y --force-yes mariadb-server mariadb-client memcached php7.0 php7.0-fpm php7.0-mysql php7.0-curl php7.0-gd php7.0-imap php7.0-json php7.0-cli php7.0-xml php-memcache
+RUN apt-get install -y --force-yes libsodium18 mariadb-server mariadb-client memcached php7.0 php7.0-fpm php7.0-mysql php7.0-curl php7.0-gd php7.0-imap php7.0-json php7.0-cli php7.0-xml php-memcache
 # Install tengine
 ADD http://tengine.taobao.org/download/tengine-2.2.0.tar.gz .
 RUN tar zxvf tengine-2.2.0.tar.gz && cd tengine-2.2.0 && ./configure --with-http_concat_module && make && make install
