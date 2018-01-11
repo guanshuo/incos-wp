@@ -6,7 +6,8 @@ RUN apt-get install -y libpcre3 libpcre3-dev libssl-dev make gcc g++ build-essen
 RUN add-apt-repository -y ppa:ondrej/php && apt-get update
 RUN apt-get install -y --force-yes libsodium18 mariadb-server mariadb-client memcached php7.0 php7.0-fpm php7.0-mysql php7.0-curl php7.0-gd php7.0-imap php7.0-json php7.0-cli php7.0-xml php-memcache
 # Install tengine
-ADD https://github.com/alibaba/tengine/archive/master.tar.gz /tengine.tar.gz
+ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
+ADD https://github.com/alibaba/tengine/archive/master.zip .
 ADD http://tengine.taobao.org/download/tengine-2.2.0.tar.gz .
 RUN tar zxvf tengine-2.2.0.tar.gz && cd tengine-2.2.0 && ./configure --with-http_concat_module && make && make install
 # Install Supervisor & tingyun
