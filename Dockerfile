@@ -10,21 +10,21 @@ RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_conc
 # Install php
 ADD https://github.com/php/php-src/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
-    --prefix=/usr/local/php7 \                              #[PHP7安装的根目录]
-    #--exec-prefix=/usr/local/php7 \
+    --prefix=/usr/local/php7 \
+    --exec-prefix=/usr/local/php7 \
     --bindir=/usr/local/php7/bin \
     --sbindir=/usr/local/php7/sbin \
     --includedir=/usr/local/php7/include \
     --libdir=/usr/local/php7/lib/php \
     --mandir=/usr/local/php7/php/man \
-    --with-config-file-path=/usr/local/php7/etc \           #[PHP7的配置目录]
-    --with-mysql-sock=/var/run/mysql/mysql.sock \           #[PHP7的Unix socket通信文件]
+    --with-config-file-path=/usr/local/php7/etc \
+    --with-mysql-sock=/var/run/mysql/mysql.sock \
     --with-mcrypt=/usr/include \
     --with-mhash \
     --with-openssl \
-    --with-mysql=shared,mysqlnd \                           #[PHP7依赖mysql库]              
-    --with-mysqli=shared,mysqlnd \                          #[PHP7依赖mysql库]
-    --with-pdo-mysql=shared,mysqlnd \                       #[PHP7依赖mysql库]
+    --with-mysql=shared,mysqlnd \
+    --with-mysqli=shared,mysqlnd \
+    --with-pdo-mysql=shared,mysqlnd \
     --with-gd \
     --with-iconv \
     --with-zlib \
@@ -47,17 +47,17 @@ RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
     --enable-soap \
     --without-pear \
     --with-gettext \
-    --enable-session \                                      #[允许php会话session]
-    --with-curl \                                           #[允许curl扩展]
+    --enable-session \
+    --with-curl \
     --with-jpeg-dir \
     --with-freetype-dir \
-    --enable-opcache \                                      #[使用opcache缓存]
+    --enable-opcache \
     --enable-fpm \
     --enable-fastcgi \
-    --with-fpm-user=nginx \                                 #[php-fpm的用户]
-    --with-fpm-group=nginx \                                #[php-fpm的用户组]
+    --with-fpm-user=nginx \
+    --with-fpm-group=nginx \
     --without-gdbm \
-    --with-mcrypt=/usr/local/related/libmcrypt \            #[指定libmcrypt位置]
+    --with-mcrypt=/usr/local/related/libmcrypt \
     --disable-fileinfo \
 && make && make install && rm -rf /master.tar.gz /php-src-master
 # Install Supervisor & tingyun & shadowsocks
