@@ -3,7 +3,7 @@ FROM ubuntu:trusty
 RUN apt-get update && \
     apt-get install -y --force-yes libpcre3 libpcre3-dev libssl-dev make gcc g++ build-essential cmake curl wget git unzip \
     python-software-properties python-setuptools software-properties-common debian-archive-keyring \
-    python-pip libsodium18 mariadb-server mariadb-client memcached openssl openssh-server \
+    python-pip libsodium mariadb-server mariadb-client memcached openssl openssh-server \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
