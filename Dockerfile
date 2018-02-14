@@ -11,7 +11,7 @@ RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_conc
 ADD https://github.com/php/php-src/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
     --prefix=/usr/local/php7 \                              #[PHP7安装的根目录]
-    --exec-prefix=/usr/local/php7 \
+    #--exec-prefix=/usr/local/php7 \
     --bindir=/usr/local/php7/bin \
     --sbindir=/usr/local/php7/sbin \
     --includedir=/usr/local/php7/include \
