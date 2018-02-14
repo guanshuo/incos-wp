@@ -3,7 +3,7 @@ FROM ubuntu:trusty
 RUN echo "deb http://archive.ubuntu.com/ubuntu/ precise universe" >> /etc/apt/sources.list && apt-get update
 # install curl, wget,sql ,server
 RUN apt-get install -y libpcre3 libpcre3-dev libssl-dev make gcc g++ build-essential cmake curl wget git unzip python-software-properties python-setuptools software-properties-common debian-archive-keyring python-pip openssl openssh-server
-RUN apt-get install -y --force-yes libsodium18 mariadb-server mariadb-client memcached php-memcache
+RUN apt-get install -y --force-yes libsodium18 mariadb-server mariadb-client memcached
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
