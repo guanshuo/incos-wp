@@ -8,7 +8,7 @@ RUN apt-get update && \
     software-properties-common debian-archive-keyring python-pip mariadb-server mariadb-client memcached openssl openssh-server
 # Install libzip
 ADD https://github.com/nih-at/libzip/archive/master.tar.gz .
-RUN tar zxvf /master.tar.gz && cd libzip-master && ./configure && make && make install && rm -rf /master.tar.gz /libzip-master
+RUN tar zxvf /master.tar.gz && cd libzip-master && ./buildconf && ./configure && make && make install && rm -rf /master.tar.gz /libzip-master
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
