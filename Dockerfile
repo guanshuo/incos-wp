@@ -4,9 +4,11 @@ RUN apt-get update && \
     apt-get install -y --force-yes \
     build-essential libexpat1-dev libgeoip-dev libpng-dev libpcre3 libpcre3-dev libssl-dev \
     libxml2-dev rcs zlib1g-dev libmcrypt-dev libcurl4-openssl-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev pkg-config \
-    libgmp-dev libmysqlclient-dev libpspell-dev libicu-dev librecode-dev systemtap-sdt-dev libz-dev zlib1g-dbg libbz2-dev libdb-dev libedit-dev libgdbm-dev unixodbc-dev libxslt-dev libldb-dev \
     make gcc g++ autoconf bison build-essential cmake curl wget unzip git python-software-properties python-setuptools \
     software-properties-common debian-archive-keyring python-pip mariadb-server mariadb-client memcached openssl openssh-server
+# Install libzip
+ADD https://github.com/nih-at/libzip/archive/master.tar.gz .
+RUN tar zxvf /master.tar.gz && cd libzip-master && ./configure && make && make install && rm -rf /master.tar.gz /libzip-master
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
