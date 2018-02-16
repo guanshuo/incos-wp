@@ -1,9 +1,10 @@
 FROM ubuntu:trusty
 # install curl, wget,sql ,server
 RUN apt-get update && \
-    apt-get install -y --force-yes libpcre3 libpcre3-dev libxml2-dev libssl-dev make gcc g++ autoconf bison build-essential cmake \
-    curl wget unzip git python-software-properties python-setuptools software-properties-common debian-archive-keyring \
-    python-pip mariadb-server mariadb-client memcached openssl openssh-server
+    apt-get install -y --force-yes build-essential libexpat1-dev libgeoip-dev libpng-dev libpcre3 libpcre3-dev libssl-dev \
+    libxml2-dev rcs zlib1g-dev libmcrypt-dev libcurl4-openssl-dev libjpeg-dev libpng-dev libwebp-dev pkg-config
+    make gcc g++ autoconf bison build-essential cmake curl wget unzip git python-software-properties python-setuptools \
+    software-properties-common debian-archive-keyring python-pip mariadb-server mariadb-client memcached openssl openssh-server
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
