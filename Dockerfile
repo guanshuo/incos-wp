@@ -2,7 +2,7 @@ FROM ubuntu:trusty
 # install curl, wget,sql ,server
 RUN apt-get update && \
     apt-get install -y --force-yes \
-    build-essential libexpat1-dev libgeoip-dev libpng-dev libpcre3 libpcre3-dev libssl-dev libzip2 libzip-dev \
+    build-essential libexpat1-dev libgeoip-dev libpng-dev libpcre3 libpcre3-dev libssl-dev libzip4 \
     libxml2-dev rcs zlib1g-dev libmcrypt-dev libcurl4-openssl-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev pkg-config \
     make gcc g++ autoconf bison build-essential cmake curl wget unzip git python-software-properties python-setuptools \
     software-properties-common debian-archive-keyring python-pip mariadb-server mariadb-client memcached openssl openssh-server
