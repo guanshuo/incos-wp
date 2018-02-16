@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 # install curl, wget,sql ,server
 RUN apt-get update && \
-    apt-get install -y --force-yes libpcre3 libpcre3-dev libssl-dev make gcc g++ autoconf bison build-essential cmake \
+    apt-get install -y --force-yes libpcre3 libpcre3-dev libxml2-dev libssl-dev make gcc g++ autoconf bison build-essential cmake \
     curl wget unzip git python-software-properties python-setuptools software-properties-common debian-archive-keyring \
     python-pip mariadb-server mariadb-client memcached openssl openssh-server
 # Install tengine
