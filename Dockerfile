@@ -1,102 +1,79 @@
-FROM ubuntu:15.04
-
-MAINTAINER Hussani Oliveira
-
-WORKDIR /tmp
-
-RUN apt-get update
-RUN apt-get install -y make \
-    autoconf \
-    bison \
-    re2c \
-    apache2-dev \
-    git \
-    wget \
-    libgmp-dev \
-    libcurl4-openssl-dev \
-    libmcrypt-dev \
-    libxml2-dev \
-    libjpeg-dev \
-    libjpeg62 \
-    libfreetype6-dev \
-    libmysqlclient-dev \
-    libpspell-dev \
-    libicu-dev \
-    librecode-dev \
-    apache2 \
-    systemtap-sdt-dev \
-    pkg-config \
-    libssl-dev \
-    libz-dev \
-    zlib1g-dbg \
-    libbz2-dev \
-    libdb-dev \
-    libedit-dev \
-    libgdbm-dev \
-    unixodbc-dev \
-    libxslt-dev \
-    libldb-dev
-
-WORKDIR /php7-binaries
-
-RUN wget https://github.com/php/php-src/archive/master.tar.gz
-RUN tar -zxvf master.tar.gz
-
-WORKDIR /php7-binaries/php-src-master
-
-RUN ./buildconf
-RUN ./configure \
-    --prefix=/usr/local/php7/7.0.0 \
-    --localstatedir=/usr/local/var \
-    --sysconfdir=/usr/local/etc/php/7 \
-    --with-config-file-path=/usr/local/etc/php/7 \
-    --with-config-file-scan-dir=/usr/local/etc/php/7/conf.d \
-    --mandir=/usr/local/php7/7.0.0/share/man \
-    --enable-bcmath \
-    --enable-calendar \
-    --enable-exif \
-    --enable-ftp \
-    --enable-gd-native-ttf \
-    --enable-intl \
-    --enable-mbregex \
-    --enable-mbstring \
-    --enable-shmop \
-    --enable-soap \
-    --enable-sockets \
-    --enable-sysvmsg \
-    --enable-sysvsem \
-    --enable-sysvshm \
-    --enable-wddx \
-    --enable-zip \
-    --with-freetype-dir=/usr/local/opt/freetype \
-    --with-gd \
-    --with-gettext=/usr/local/opt/gettext \
-    --with-iconv-dir=/usr \
-    --with-icu-dir=/usr \
-    --with-jpeg-dir=/usr/local/opt/jpeg \
-    --with-kerberos=/usr \
-    --with-libedit \
+FROM ubuntu:trusty
+# install curl, wget,sql ,server
+RUN apt-get update && \
+    apt-get install -y --force-yes \
+    build-essential libexpat1-dev libgeoip-dev libpng-dev libpcre3 libpcre3-dev libssl-dev \
+    libxml2-dev rcs zlib1g-dev libmcrypt-dev libcurl4-openssl-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev pkg-config \
+    make gcc g++ autoconf bison build-essential cmake curl wget unzip git python-software-properties python-setuptools \
+    software-properties-common debian-archive-keyring python-pip mariadb-server mariadb-client memcached openssl openssh-server
+# Install libzip
+ADD https://github.com/nih-at/libzip/archive/master.tar.gz .
+RUN tar zxvf /master.tar.gz && cd libzip-master && mkdir build && cd build && cmake .. && make && make install && rm -rf /master.tar.gz /libzip-master
+# Install tengine
+ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
+RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
+# Install php
+ADD https://github.com/php/php-src/archive/master.tar.gz .
+RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
+    --prefix=/usr/local/php7 \
+    --exec-prefix=/usr/local/php7 \
+    --bindir=/usr/local/php7/bin \
+    --sbindir=/usr/local/php7/sbin \
+    --includedir=/usr/local/php7/include \
+    --libdir=/usr/local/php7/lib/php \
+    --mandir=/usr/local/php7/php/man \
+    --with-config-file-path=/usr/local/php7/etc \
+    --with-mysql-sock=/var/run/mysql/mysql.sock \
+    --with-mcrypt=/usr/include \
     --with-mhash \
     --with-openssl \
+    --with-mysql=shared,mysqlnd \
+    --with-mysqli=shared,mysqlnd \
+    --with-pdo-mysql=shared,mysqlnd \
+    --with-gd \
+    --with-iconv \
     --with-zlib \
-    --with-bz2 \
-    --with-apxs2=/usr/bin/apxs2 \
-    --enable-fpm \
-    --with-fpm-user=_www \
-    --with-fpm-group=_www \
+    --enable-zip \
+    --enable-inline-optimization \
     --disable-debug \
-    --with-pdo-odbc=unixODBC,/usr \
-    --with-png-dir=/usr \
-    --libexecdir=/usr/local/php7/7.0.0/libexec \
-    --with-curl \
-    --with-xsl=/usr \
-    --with-mysql-sock=/tmp/mysql.sock \
-    --with-mysqli=mysqlnd \
-    --with-pdo-mysql=mysqlnd \
+    --disable-rpath \
+    --enable-shared \
+    --enable-xml \
+    --enable-bcmath \
+    --enable-shmop \
+    --enable-sysvsem \
+    --enable-mbregex \
+    --enable-mbstring \
+    --enable-ftp \
+    --enable-gd-native-ttf \
     --enable-pcntl \
-    --disable-opcache \
-    --enable-dtrace \
-    --disable-phpdbg \
-    --enable-zend-signals
-
-RUN make && make install
+    --enable-sockets \
+    --with-xmlrpc \
+    --enable-soap \
+    --without-pear \
+    --with-gettext \
+    --enable-session \
+    --with-curl \
+    --with-jpeg-dir \
+    --with-freetype-dir \
+    --enable-opcache \
+    --enable-fpm \
+    --enable-fastcgi \
+    --with-fpm-user=nginx \
+    --with-fpm-group=nginx \
+    --without-gdbm \
+    --with-mcrypt=/usr/local/related/libmcrypt \
+    --disable-fileinfo \
+&& make && make install && rm -rf /master.tar.gz /php-src-master
+# Install Supervisor & tingyun & shadowsocks
+RUN /usr/bin/easy_install supervisor && /usr/bin/easy_install supervisor-stdout
+RUN wget http://download.networkbench.com/agent/php/2.7.0/tingyun-agent-php-2.7.0.x86_64.deb?a=1498149881851 -O tingyun-agent-php.deb
+RUN wget http://download.networkbench.com/agent/system/1.1.1/tingyun-agent-system-1.1.1.x86_64.deb?a=1498149959157 -O tingyun-agent-system.deb
+RUN sudo dpkg -i tingyun-agent-php.deb && sudo dpkg -i tingyun-agent-system.deb && rm -rf /tingyun-*.deb
+RUN pip install shadowsocks
+# Start
+ADD start.sh /start.sh
+RUN sed -i -e 's/\r//g' /start.sh && sed -i -e 's/^M//g' /start.sh && chmod +x /*.sh
+VOLUME ["/data"]
+EXPOSE 22 80 3306 8388 9001 11211
+CMD ["/bin/bash", "/start.sh"]
