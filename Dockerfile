@@ -4,8 +4,11 @@ RUN apt-get update && \
     apt-get install -y --force-yes \
     build-essential libexpat1-dev libgeoip-dev libpng-dev libpcre3 libpcre3-dev libssl-dev \
     libxml2-dev rcs zlib1g-dev libmcrypt-dev libcurl4-openssl-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev pkg-config \
-    make gcc g++ autoconf bison build-essential cmake curl wget unzip git python-software-properties python-setuptools \
+    make gcc g++ autoconf bison build-essential curl wget unzip git python-software-properties python-setuptools \
     software-properties-common debian-archive-keyring python-pip mariadb-server mariadb-client memcached openssl openssh-server
+# Install cmake
+ADD https://github.com/Kitware/CMake/archive/master.tar.gz .
+RUN tar zxvf /master.tar.gz && cd CMake-master && ./bootstrap && make && make install && rm -rf /master.tar.gz /CMake-master
 # Install libzip
 ADD https://github.com/nih-at/libzip/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd libzip-master && mkdir build && cd build && cmake .. && make && make install && rm -rf /master.tar.gz /libzip-master
