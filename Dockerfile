@@ -12,7 +12,7 @@ ADD https://github.com/nih-at/libzip/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd libzip-master && mkdir build && cd build && cmake .. && make && make install && rm -rf /master.tar.gz /libzip-master
 # Install libsodium
 ADD https://github.com/jedisct1/libsodium/archive/master.tar.gz .
-RUN tar zxvf /master.tar.gz && cd libsodium-master && ./configure && make -j2 && make install && rm -rf /master.tar.gz /libsodium-master
+RUN tar zxvf /master.tar.gz && cd libsodium-master && ./configure && make && make install && rm -rf /master.tar.gz /libsodium-master
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
