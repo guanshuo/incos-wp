@@ -13,7 +13,7 @@ RUN tar zxvf /master.tar.gz && cd libzip-master && mkdir build && cd build && cm
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
-#ldconfig
+# ldconfig
 RUN echo "/usr/local/lib" >> /etc/ld.so.conf && ldconfig
 # Install php
 ADD https://github.com/php/php-src/archive/master.tar.gz .
