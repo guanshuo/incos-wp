@@ -1,11 +1,9 @@
 FROM ubuntu:trusty
-# install curl, wget,sql ,server
-RUN apt-get update && \
-    apt-get install -y --force-yes \
-    libexpat1-dev libgeoip-dev libpng-dev libpcre3 libpcre3-dev libssl-dev libxml2-dev \
-    rcs zlib1g-dev libmcrypt-dev libcurl4-openssl-dev libjpeg-dev libpng-dev libwebp-dev libfreetype6-dev pkg-config \
-    make gcc g++ autoconf bison build-essential curl wget unzip git python-software-properties python-setuptools \
-    software-properties-common debian-archive-keyring python-pip mariadb-server mariadb-client memcached openssl openssh-server
+# apt install
+RUN apt-get update && apt-get install -y --force-yes build-essential libexpat1-dev libgeoip-dev libpcre3-dev libfreetype6-dev \
+    libmcrypt-dev libcurl4-openssl-dev libxml2-dev libpng-dev libjpeg-dev libpng-dev libwebp-dev libssl-dev \
+    rcs zlib1g-dev pkg-config python-software-properties python-setuptools software-properties-common debian-archive-keyring \
+    make gcc g++ autoconf bison curl wget unzip git python-pip mariadb-server mariadb-client memcached openssl openssh-server \
 # Install cmake
 ADD https://github.com/Kitware/CMake/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd CMake-master && ./bootstrap && make && make install && rm -rf /master.tar.gz /CMake-master
