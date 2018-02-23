@@ -3,7 +3,7 @@ FROM ubuntu:trusty
 RUN apt-get update && apt-get install -y --force-yes build-essential libexpat1-dev libgeoip-dev libpcre3-dev libfreetype6-dev \
     libmcrypt-dev libcurl4-openssl-dev libxml2-dev libpng-dev libjpeg-dev libpng-dev libwebp-dev \
     rcs zlib1g-dev pkg-config python-software-properties python-setuptools software-properties-common debian-archive-keyring \
-    curl wget unzip git python-pip mariadb-server mariadb-client memcached openssl openssh-server \
+    curl wget unzip git python-pip mariadb-server mariadb-client memcached openssl openssh-server
 # Install cmake
 ADD https://github.com/Kitware/CMake/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd CMake-master && ./bootstrap && make && make install && rm -rf /master.tar.gz /CMake-master
