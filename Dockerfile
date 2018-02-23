@@ -1,8 +1,8 @@
 FROM ubuntu:trusty
 # apt install
-RUN apt-get update && apt-get install -y --force-yes build-essential libexpat1-dev libgeoip-dev libpcre3-dev libfreetype6-dev \
-    libmcrypt-dev libcurl4-openssl-dev libxml2-dev libpng-dev libjpeg-dev libpng-dev libwebp-dev \
-    rcs zlib1g-dev pkg-config python-software-properties python-setuptools software-properties-common debian-archive-keyring \
+RUN apt-get update && apt-get install -y --force-yes rcs build-essential zlib1g-dev pkg-config libexpat1-dev libgeoip-dev \
+    libpcre3-dev libfreetype6-dev libmcrypt-dev libcurl4-openssl-dev libxml2-dev libpng-dev libjpeg-dev libpng-dev libwebp-dev \
+    python-software-properties python-setuptools software-properties-common debian-archive-keyring \
     curl wget unzip git python-pip mariadb-server mariadb-client memcached openssl openssh-server
 # Install cmake
 ADD https://github.com/Kitware/CMake/archive/master.tar.gz .
