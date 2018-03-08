@@ -12,7 +12,7 @@ ADD https://github.com/nih-at/libzip/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd libzip-master && mkdir build && cd build && cmake .. && make && make install && rm -rf /master.tar.gz /libzip-master
 # Install re2c
 ADD https://github.com/skvadrik/re2c/archive/master.tar.gz .
-RUN tar zxvf /master.tar.gz && cd re2c-master && ./configure && make && make install && rm -rf /master.tar.gz /re2c-master
+RUN tar zxvf /master.tar.gz && cd re2c-master/re2c && ./autogen.sh && ./configure && make && make install && rm -rf /master.tar.gz /re2c-master
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
