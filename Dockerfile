@@ -1,6 +1,6 @@
 FROM ubuntu:trusty
 # apt install
-RUN apt-get update && apt-get install -y --force-yes rcs build-essential zlib1g-dev pkg-config libexpat1-dev libgeoip-dev \
+RUN apt-get update && apt-get install -y --force-yes rcs build-essential zlib1g-dev pkg-config libexpat1-dev libgeoip-dev libbz2-dev \
     libpcre3-dev libfreetype6-dev libmcrypt-dev libcurl4-openssl-dev libxml2-dev libpng-dev libjpeg-dev libpng-dev libwebp-dev \
     python-software-properties python-setuptools software-properties-common debian-archive-keyring curl wget unzip git \
     autoconf bison mariadb-server mariadb-client memcached openssl openssh-server
@@ -10,6 +10,9 @@ RUN tar zxvf /master.tar.gz && cd CMake-master && ./bootstrap && make && make in
 # Install libzip
 ADD https://github.com/nih-at/libzip/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd libzip-master && mkdir build && cd build && cmake .. && make && make install && rm -rf /master.tar.gz /libzip-master
+# Install re2c
+ADD https://github.com/skvadrik/re2c/archive/master.tar.gz .
+RUN tar zxvf /master.tar.gz && cd re2c-master && ./configure && make && make install && rm -rf /master.tar.gz /re2c-master
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
@@ -26,11 +29,9 @@ RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
     --libdir=/usr/local/php7/lib/php \
     --mandir=/usr/local/php7/php/man \
     --with-config-file-path=/usr/local/php7/etc \
-    --with-mysql-sock=/var/run/mysql/mysql.sock \
-    --with-mcrypt=/usr/include \
+    --with-mysql-sock=/var/run/mysqld/mysqld.sock \
     --with-mhash \
     --with-openssl \
-    --with-mysql=shared,mysqlnd \
     --with-mysqli=shared,mysqlnd \
     --with-pdo-mysql=shared,mysqlnd \
     --with-gd \
@@ -48,7 +49,6 @@ RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
     --enable-mbregex \
     --enable-mbstring \
     --enable-ftp \
-    --enable-gd-native-ttf \
     --enable-pcntl \
     --enable-sockets \
     --with-xmlrpc \
@@ -61,11 +61,10 @@ RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
     --with-freetype-dir \
     --enable-opcache \
     --enable-fpm \
-    --enable-fastcgi \
-    --with-fpm-user=nginx \
-    --with-fpm-group=nginx \
+    --with-fpm-user=www-data \
+    --with-fpm-group=www-data \
     --without-gdbm \
-    --with-mcrypt=/usr/local/related/libmcrypt \
+    --enable-fast-install \
     --disable-fileinfo \
 && make && make install && rm -rf /master.tar.gz /php-src-master
 # Install Supervisor & tingyun
