@@ -26,6 +26,9 @@ RUN tar zxvf /master.tar.gz && cd server-master && cmake . \
     -DMYSQL_UNIX_ADDR=/tmp/mysql.sock \
     -DDEFAULT_CHARSET=utf8 \
     -DDEFAULT_COLLATION=utf8_general_ci \
+    -DWITHOUT_INNOBASE_STORAGE_ENGINE=1 \
+    -DWITHOUT_ARCHIVE_STORAGE_ENGINE=1 \
+    -DWITHOUT_BLACKHOLE_STORAGE_ENGINE=1 \
 && make && make install && rm -rf /master.tar.gz /server-master
 # Install php
 ADD https://github.com/php/php-src/archive/master.tar.gz .
