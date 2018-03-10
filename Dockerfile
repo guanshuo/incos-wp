@@ -14,6 +14,8 @@ RUN tar zxvf /master.tar.gz && cd libzip-master && mkdir build && cd build && cm
 # Install re2c
 ADD https://github.com/skvadrik/re2c/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd re2c-master/re2c && ./autogen.sh && ./configure && make && make install && rm -rf /master.tar.gz /re2c-master
+# ldconfig
+RUN echo "/usr/local/lib" >> /etc/ld.so.conf && ldconfig
 # Install mariadb
 ADD https://github.com/MariaDB/server/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd server-master && cmake . \
@@ -25,11 +27,6 @@ RUN tar zxvf /master.tar.gz && cd server-master && cmake . \
     -DDEFAULT_CHARSET=utf8 \
     -DDEFAULT_COLLATION=utf8_general_ci \
 && make && make install && rm -rf /master.tar.gz /server-master
-# Install tengine
-ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
-RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
-# ldconfig
-RUN echo "/usr/local/lib" >> /etc/ld.so.conf && ldconfig
 # Install php
 ADD https://github.com/php/php-src/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
@@ -79,6 +76,9 @@ RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
     --enable-fast-install \
     --disable-fileinfo \
 && make && make install && rm -rf /master.tar.gz /php-src-master
+# Install tengine
+ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
+RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
 # Install Supervisor & tingyun
 RUN /usr/bin/easy_install supervisor && /usr/bin/easy_install supervisor-stdout
 RUN wget http://download.networkbench.com/agent/php/2.7.0/tingyun-agent-php-2.7.0.x86_64.deb?a=1498149881851 -O tingyun-agent-php.deb
