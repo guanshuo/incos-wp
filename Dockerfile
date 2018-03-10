@@ -17,8 +17,8 @@ RUN tar zxvf /master.tar.gz && cd re2c-master/re2c && ./autogen.sh && ./configur
 # ldconfig
 RUN echo "/usr/local/lib" >> /etc/ld.so.conf && ldconfig
 # Install mariadb
-ADD https://github.com/MariaDB/server/archive/master.tar.gz .
-RUN tar zxvf /master.tar.gz && cd server-master && cmake . \
+ADD https://github.com/MariaDB/server/archive/10.3.tar.gz .
+RUN tar zxvf /10.3.tar.gz && cd server-10.3 && cmake . \
     -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
     -DMYSQL_DATADIR=/data/mysql \
     -DSYSCONFDIR=/etc/mysql \
@@ -29,7 +29,7 @@ RUN tar zxvf /master.tar.gz && cd server-master && cmake . \
     -DWITHOUT_INNOBASE_STORAGE_ENGINE=1 \
     -DWITHOUT_ARCHIVE_STORAGE_ENGINE=1 \
     -DWITHOUT_BLACKHOLE_STORAGE_ENGINE=1 \
-&& make && make install && rm -rf /master.tar.gz /server-master
+&& make && make install && rm -rf /10.3.tar.gz /server-10.3
 # Install php
 ADD https://github.com/php/php-src/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
