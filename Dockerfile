@@ -1,9 +1,10 @@
 FROM ubuntu:trusty
 # apt install
-RUN apt-get update && apt-get install -y --force-yes rcs build-essential zlib1g-dev pkg-config libexpat1-dev libgeoip-dev libbz2-dev \
+RUN apt-get update && apt-get install -y --force-yes \
+    rcs build-essential zlib1g-dev pkg-config libexpat1-dev libgeoip-dev libbz2-dev libaio-dev libreadline-dev \
     libpcre3-dev libfreetype6-dev libmcrypt-dev libcurl4-openssl-dev libxml2-dev libpng-dev libjpeg-dev libpng-dev libwebp-dev \
     python-software-properties python-setuptools software-properties-common debian-archive-keyring curl wget unzip git \
-    autoconf bison mariadb-server mariadb-client memcached openssl openssh-server
+    autoconf bison memcached openssl openssh-server
 # Install cmake
 ADD https://github.com/Kitware/CMake/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd CMake-master && ./bootstrap && make && make install && rm -rf /master.tar.gz /CMake-master
@@ -13,6 +14,17 @@ RUN tar zxvf /master.tar.gz && cd libzip-master && mkdir build && cd build && cm
 # Install re2c
 ADD https://github.com/skvadrik/re2c/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd re2c-master/re2c && ./autogen.sh && ./configure && make && make install && rm -rf /master.tar.gz /re2c-master
+# Install mariadb
+ADD https://github.com/MariaDB/server/archive/master.tar.gz .
+RUN tar zxvf /master.tar.gz && cd server-master && cmake . \
+    -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
+    -DMYSQL_DATADIR=/data/mysql \
+    -DSYSCONFDIR=/etc/mysql \
+    -DWITHOUT_TOKUDB=1 \
+    -DMYSQL_UNIX_ADDR=/tmp/mysql.sock \
+    -DDEFAULT_CHARSET=utf8 \
+    -DDEFAULT_COLLATION=utf8_general_ci \
+&& make && make install && rm -rf /master.tar.gz /server-master
 # Install tengine
 ADD https://github.com/alibaba/tengine/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd tengine-master && ./configure --with-http_concat_module && make && make install && rm -rf /master.tar.gz /tengine-master
