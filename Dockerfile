@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 # apt install
 RUN apt-get update && apt-get install -y --force-yes \
-    rcs build-essential zlib1g-dev pkg-config libexpat1-dev libgeoip-dev libbz2-dev libaio-dev libreadline-dev \
+    rcs build-essential zlib1g-dev pkg-config libexpat1-dev libgeoip-dev libbz2-dev libaio-dev libreadline-dev libncurses5-dev \
     libpcre3-dev libfreetype6-dev libmcrypt-dev libcurl4-openssl-dev libxml2-dev libpng-dev libjpeg-dev libpng-dev libwebp-dev \
     python-software-properties python-setuptools software-properties-common debian-archive-keyring curl wget unzip git \
     autoconf bison memcached openssl openssh-server
