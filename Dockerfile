@@ -17,7 +17,8 @@ RUN tar zxvf /master.tar.gz && cd re2c-master/re2c && ./autogen.sh && ./configur
 # ldconfig
 RUN echo "/usr/local/lib" >> /etc/ld.so.conf && ldconfig
 # Install mariadb
-RUN git clone --recurse-submodules --depth=1 https://github.com/MariaDB/server.git && cd server && cmake . \
+RUN git clone --recurse-submodules --depth=1 https://github.com/MariaDB/server.git 
+RUN cd server && cmake . \
     -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
     -DMYSQL_DATADIR=/data/mysql \
     -DSYSCONFDIR=/etc/mysql \
