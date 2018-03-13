@@ -29,7 +29,7 @@ RUN cd server && cmake . \
     -DWITHOUT_INNOBASE_STORAGE_ENGINE=1 \
     -DWITHOUT_ARCHIVE_STORAGE_ENGINE=1 \
     -DWITHOUT_BLACKHOLE_STORAGE_ENGINE=1 \
-&& make && make install && rm -rf /server
+&& make -j4 && make install && rm -rf /server
 # Install php
 ADD https://github.com/php/php-src/archive/master.tar.gz .
 RUN tar zxvf /master.tar.gz && cd php-src-master && ./buildconf && ./configure \
