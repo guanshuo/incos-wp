@@ -15,8 +15,6 @@ RUN wget http://download.networkbench.com/agent/system/1.1.1/tingyun-agent-syste
 RUN sudo dpkg -i tingyun-agent-php.deb && sudo dpkg -i tingyun-agent-system.deb && rm -rf /tingyun-*.deb
 RUN pip install shadowsocks
 # Start
-ADD start.sh /start.sh
-RUN sed -i -e 's/\r//g' /start.sh && sed -i -e 's/^M//g' /start.sh && chmod +x /*.sh
 VOLUME ["/data"]
 EXPOSE 22 80 3306 8388 9001 11211
 CMD ["sh","-c"," \
